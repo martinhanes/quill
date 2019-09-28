@@ -380,7 +380,7 @@ class SqlQuerySpec extends Spec {
               }
           }
           testContext.run(q).string mustEqual
-            "SELECT t._2i, SUM(t._1i) FROM (SELECT b.i AS _2i, a.i AS _1i FROM TestEntity a INNER JOIN TestEntity2 b ON a.s = b.s) AS t GROUP BY t._2i"
+            "SELECT t._2i, SUM(t._1i) FROM (SELECT a.i AS _1i, b.i AS _2i FROM TestEntity a INNER JOIN TestEntity2 b ON a.s = b.s) AS t GROUP BY t._2i"
         }
       }
     }
@@ -780,7 +780,7 @@ class SqlQuerySpec extends Spec {
           qr1.map(q => TrivialEntitySameField(q.s)) ++ qr1.map(q => TrivialEntitySameField(q.s))
         }
         testContext.run(q).string mustEqual
-          "SELECT x.s FROM ((SELECT q.s AS s FROM TestEntity q) UNION ALL (SELECT q1.s AS s FROM TestEntity q1)) AS x"
+          "SELECT x.s FROM ((SELECT q.s FROM TestEntity q) UNION ALL (SELECT q1.s FROM TestEntity q1)) AS x"
       }
     }
   }
